@@ -109,9 +109,14 @@ public class Main {
         try {
             command.setData(addressBook, lastShownList);
             CommandResult result = command.execute();
-            storage.save(addressBook);
+            try {
+                storage.save(addressBook);
+            }catch (StorageOperationException e) {
+                ui.showToUser(e.getMessage());
+            }
             return result;
         } catch (Exception e) {
+        }catch (Exception e) {
             ui.showToUser(e.getMessage());
             throw new RuntimeException(e);
         }
