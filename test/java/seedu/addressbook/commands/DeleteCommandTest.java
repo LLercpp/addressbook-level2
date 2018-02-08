@@ -35,11 +35,11 @@ public class DeleteCommandTest {
         Person johnDoe = new Person(new Name("John Doe"), new Phone("61234567", false),
                 new Email("john@doe.com", false), new Address("395C, Ben Road, #1-1, 11111", false), new UniqueTagList());
         Person janeDoe = new Person(new Name("Jane Doe"), new Phone("91234567", false),
-                new Email("jane@doe.com", false), new Address("33G, Ohm Road, #2-2. 22222", false), new UniqueTagList());
+                new Email("jane@doe.com", false), new Address("33G, Ohm Road, #2-2, 22222", false), new UniqueTagList());
         Person samDoe = new Person(new Name("Sam Doe"), new Phone("63345566", false),
-                new Email("sam@doe.com", false), new Address("55G, Abc Road, #33-3. 33333", false), new UniqueTagList());
+                new Email("sam@doe.com", false), new Address("55G, Abc Road, #33-3, 33333", false), new UniqueTagList());
         Person davidGrant = new Person(new Name("David Grant"), new Phone("61121122", false),
-                new Email("david@grant.com", false), new Address("44H, Define Road. #4-44, 444444", false),
+                new Email("david@grant.com", false), new Address("44H, Define Road, #4-44, 444444", false),
                 new UniqueTagList());
 
         emptyAddressBook = TestUtil.createAddressBook();
