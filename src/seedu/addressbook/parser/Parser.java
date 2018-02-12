@@ -42,6 +42,9 @@ public class Parser {
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
 
+
+
+
     /**
      * Signals that the user input could not be parsed.
      */
@@ -61,10 +64,11 @@ public class Parser {
     /**
      * Parses user input into command for execution.
      *
+     * @param parser
      * @param userInput full user input string
      * @return the command based on the user input
      */
-    public Command parseCommand(String userInput) {
+    public static Command parseCommand(Parser parser, String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -79,7 +83,7 @@ public class Parser {
             return prepareAdd(arguments);
 
         case DeleteCommand.COMMAND_WORD:
-            return prepareDelete(arguments);
+            return prepareDelete(parser, arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -91,10 +95,10 @@ public class Parser {
             return new ListCommand();
 
         case ViewCommand.COMMAND_WORD:
-            return prepareView(arguments);
+            return prepareView(parser, arguments);
 
         case ViewAllCommand.COMMAND_WORD:
-            return prepareViewAll(arguments);
+            return prepareViewAll(parser, arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -111,7 +115,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareAdd(String args) {
+    private static Command prepareAdd(String args) {
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
@@ -162,12 +166,13 @@ public class Parser {
     /**
      * Parses arguments in the context of the delete person command.
      *
+     * @param parser
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareDelete(String args) {
+    private static Command prepareDelete(Parser parser, String args) {
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            final int targetIndex = parser.parseArgsAsDisplayedIndex(args);
             return new DeleteCommand(targetIndex);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
@@ -179,13 +184,14 @@ public class Parser {
     /**
      * Parses arguments in the context of the view command.
      *
+     * @param parser
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareView(String args) {
+    private static Command prepareView(Parser parser, String args) {
 
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            final int targetIndex = parser.parseArgsAsDisplayedIndex(args);
             return new ViewCommand(targetIndex);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -198,13 +204,14 @@ public class Parser {
     /**
      * Parses arguments in the context of the view all command.
      *
+     * @param parser
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareViewAll(String args) {
+    private static Command prepareViewAll(Parser parser, String args) {
 
         try {
-            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            final int targetIndex = parser.parseArgsAsDisplayedIndex(args);
             return new ViewAllCommand(targetIndex);
         } catch (ParseException pe) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -237,7 +244,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareFind(String args) {
+    private static Command prepareFind(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
