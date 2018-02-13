@@ -111,6 +111,11 @@ Examples:
   `viewall 1`<br>
   Views all details of the 1st person in the results of the `find` command.
 
+### Sort the record according to lexicographic order by name
+Sort all records according to lexicographic order/
+List the sorted list.
+Format: 'sort'
+
 ### Clearing all entries : `clear`
 Clears all entries from the address book.<br>
 Format: `clear`  
